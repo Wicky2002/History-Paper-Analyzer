@@ -34,5 +34,5 @@ To run this project locally, you will need:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/yourusername/sinhala-answer-scorer.git](https://github.com/yourusername/sinhala-answer-scorer.git)
+   git clone [https://github.com/Wicky2002/History-Paper-Analyzer](https://github.com/Wicky2002/History-Paper-Analyzer)
    cd sinhala-answer-scorer
