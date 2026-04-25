@@ -1,0 +1,19 @@
+# Environments
+.venv/
+venv/
+env/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Vector Databases & Data
+data/vector_db/
+*.sqlite3
+*.db
+*.parquet
+
+# OS Files
+.DS_Store
+Thumbs.db
