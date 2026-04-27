@@ -1,0 +1,186 @@
+{
+  "metadata": {
+    "version": "3.0.0",
+    "language": "si",
+    "scope": "අනුරාධපුර යුගය",
+    "description": "පොත්පාඩම්-පදනම් සිංහල විවෘත පිළිතුරු ශ්‍රේණිගත කිරීම සඳහා ඔන්ටොලොජි + රූබ්‍රික් දත්ත"
+  },
+  "entities": {
+    "king_pandukabhaya": {
+      "name": "පණ්ඩුකාභය",
+      "type": "king",
+      "synonyms": ["පණ්ඩුකාභය රජතුමා", "පණ්ඩුකාභය කුමරු"],
+      "attributes": {
+        "පියා": "දීඝගාමිණී",
+        "මව": "චිත්‍රා",
+        "නගර සංවර්ධනය": "අනුරාධපුරය",
+        "වැව": "අභය වැව"
+      }
+    },
+    "king_dutugemunu": {
+      "name": "දුටුගැමුණු",
+      "type": "king",
+      "synonyms": ["දුටුගැමුණු රජතුමා", "දුටුගැමුණු"],
+      "attributes": {
+        "පියා": "කාවන්තිස්ස",
+        "මව": "විහාරමහාදේවී",
+        "යුද ප්‍රතිවාදී": "එළාර"
+      }
+    },
+    "place_anuradhapura": {
+      "name": "අනුරාධපුරය",
+      "type": "place",
+      "synonyms": ["අනුරාධගම"],
+      "attributes": {
+        "සංවර්ධක": "පණ්ඩුකාභය",
+        "පුරාණ වැව": "අභය වැව",
+        "නූතන නාමය": "බසවක්කුලම"
+      }
+    },
+    "system_irrigation": {
+      "name": "ජල තාක්ෂණය",
+      "type": "system",
+      "synonyms": ["වාරි තාක්ෂණය", "වැව් පද්ධතිය"],
+      "attributes": {
+        "මූලික අංග": "වැව්",
+        "භාවිතය": "කෘෂිකර්මයට ජලය සැපයීම"
+      }
+    },
+    "system_administration": {
+      "name": "නගර පරිපාලනය",
+      "type": "system",
+      "synonyms": ["පාලන පද්ධතිය", "නගර කළමනාකරණය"],
+      "attributes": {
+        "අංග": "දිය අගල, දොරටු, සේවක පත්කිරීම්",
+        "අරමුණ": "නගර ආරක්ෂාව සහ පිරිසිදුකම"
+      }
+    }
+  },
+  "relationships": {
+    "rel_parent_father_pandukabhaya": {
+      "subject": "පණ්ඩුකාභය",
+      "relation": "පියා",
+      "object": "දීඝගාමිණී",
+      "synonyms": ["දෙමව්පිය සම්බන්ධය", "වංශික සම්බන්ධය"]
+    },
+    "rel_parent_mother_pandukabhaya": {
+      "subject": "පණ්ඩුකාභය",
+      "relation": "මව",
+      "object": "චිත්‍රා",
+      "synonyms": ["දෙමව්පිය සම්බන්ධය", "වංශික සම්බන්ධය"]
+    },
+    "rel_city_development": {
+      "subject": "පණ්ඩුකාභය",
+      "relation": "නගර සංවර්ධනය",
+      "object": "අනුරාධපුරය",
+      "synonyms": ["නගරය දියුණු කිරීම"]
+    },
+    "rel_irrigation_tank": {
+      "subject": "පණ්ඩුකාභය",
+      "relation": "වැව",
+      "object": "අභය වැව",
+      "synonyms": ["ජල තාක්ෂණ සම්බන්ධය"]
+    },
+    "rel_tank_modern_name": {
+      "subject": "අභය වැව",
+      "relation": "නූතන නාමය",
+      "object": "බසවක්කුලම",
+      "synonyms": ["වර්තමාන නාමය"]
+    }
+  },
+  "concepts": {
+    "king_identity": {
+      "label": "අදාළ රජු හඳුනාගැනීම",
+      "answer_keywords": ["පණ්ඩුකාභය", "රජතුමා", "දුටුගැමුණු"],
+      "evidence_keywords": ["රජතුමා", "කුමරු", "රජවීම"],
+      "entity_refs": ["king_pandukabhaya", "king_dutugemunu"],
+      "relationship_refs": []
+    },
+    "pandukabhaya_father": {
+      "label": "පණ්ඩුකාභයගේ පියා",
+      "answer_keywords": ["පියා", "දීඝගාමිණී"],
+      "evidence_keywords": ["පියා", "දීඝගාමිණී"],
+      "entity_refs": ["king_pandukabhaya"],
+      "relationship_refs": ["rel_parent_father_pandukabhaya"]
+    },
+    "pandukabhaya_mother": {
+      "label": "පණ්ඩුකාභයගේ මව",
+      "answer_keywords": ["මව", "චිත්‍රා"],
+      "evidence_keywords": ["මව", "චිත්‍රා"],
+      "entity_refs": ["king_pandukabhaya"],
+      "relationship_refs": ["rel_parent_mother_pandukabhaya"]
+    },
+    "anuradhapura_city_development": {
+      "label": "අනුරාධපුර සංවර්ධනය",
+      "answer_keywords": ["අනුරාධපුරය", "නගරය", "සංවර්ධනය", "දිය අගල"],
+      "evidence_keywords": ["අනුරාධගම", "අනුරාධපුරය", "දිය අගල", "දොරටු"],
+      "entity_refs": ["place_anuradhapura", "system_administration"],
+      "relationship_refs": ["rel_city_development"]
+    },
+    "tank_construction": {
+      "label": "වැව් තාක්ෂණය",
+      "answer_keywords": ["වැව", "අභය වැව", "බසවක්කුලම", "ජල තාක්ෂණය"],
+      "evidence_keywords": ["අභය වැව", "බසවක්කුලම", "වැව්", "ජල"],
+      "entity_refs": ["system_irrigation", "place_anuradhapura"],
+      "relationship_refs": ["rel_irrigation_tank", "rel_tank_modern_name"]
+    }
+  },
+  "rubrics": [
+    {
+      "rubric_id": "pandukabhaya_parentage_20",
+      "title": "පණ්ඩුකාභය දෙමව්පියන් - ලකුණු 20",
+      "max_score": 20,
+      "selection_keywords": ["පණ්ඩුකාභය", "දෙමව්පියන්", "පියා", "මව"],
+      "criteria": [
+        {
+          "criterion_id": "c1",
+          "description": "රජු නිවැරදිව හඳුනාගැනීම",
+          "marks": 4,
+          "concept_ids": ["king_identity"]
+        },
+        {
+          "criterion_id": "c2",
+          "description": "පියා නිවැරදිව සඳහන් කිරීම",
+          "marks": 8,
+          "concept_ids": ["pandukabhaya_father"]
+        },
+        {
+          "criterion_id": "c3",
+          "description": "මව නිවැරදිව සඳහන් කිරීම",
+          "marks": 8,
+          "concept_ids": ["pandukabhaya_mother"]
+        }
+      ]
+    },
+    {
+      "rubric_id": "anuradhapura_development_20",
+      "title": "අනුරාධපුර සංවර්ධන පිළිතුරු - ලකුණු 20",
+      "max_score": 20,
+      "selection_keywords": ["අනුරාධපුරය", "නගරය", "වැව", "ජල", "සංවර්ධනය"],
+      "criteria": [
+        {
+          "criterion_id": "c1",
+          "description": "නගර සංවර්ධන කරුණු",
+          "marks": 10,
+          "concept_ids": ["anuradhapura_city_development"]
+        },
+        {
+          "criterion_id": "c2",
+          "description": "වැව්/ජල තාක්ෂණ කරුණු",
+          "marks": 10,
+          "concept_ids": ["tank_construction"]
+        }
+      ]
+    }
+  ],
+  "scoring_policies": {
+    "top_k": 6,
+    "min_retrieval_score_for_confidence": 0.25,
+    "low_confidence_max_score": 8,
+    "unsupported_concept_penalty": 2,
+    "missing_evidence_penalty": 4,
+    "confidence_threshold": 0.4,
+    "low_confidence_penalty": 2,
+    "keyword_boost_weight": 0.12
+  }
+}
