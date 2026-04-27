@@ -73,12 +73,12 @@ def main() -> None:
 
     with st.expander("ඩෙමෝ සඳහා නියැදි පිළිතුරු 3"):
         samples = selected_question.get("sample_answers", {})
-        st.markdown("**ඉහළ ගුණාත්මක පිළිතුර:**")
-        st.markdown(samples.get("high", "-"))
-        st.markdown("**මධ්‍යම ගුණාත්මක පිළිතුර:**")
-        st.markdown(samples.get("medium", "-"))
-        st.markdown("**අඩු ගුණාත්මක පිළිතුර:**")
-        st.markdown(samples.get("low", "-"))
+        st.markdown("**100% නිවැරදි පිළිතුර:**")
+        st.markdown(samples.get("correct_100", samples.get("high", "-")))
+        st.markdown("**මිශ්‍ර (අර්ධ නිවැරදි) පිළිතුර:**")
+        st.markdown(samples.get("mixed", samples.get("medium", "-")))
+        st.markdown("**100% වැරදි පිළිතුර:**")
+        st.markdown(samples.get("wrong_100", samples.get("low", "-")))
 
     answer_text = st.text_area("ශිෂ්‍ය පිළිතුර (සිංහල)", height=180)
 
