@@ -450,10 +450,14 @@ def _hybrid_retrieve(query: str, top_k: int) -> tuple[list[dict[str, Any]], floa
     ranked = sorted(merged.values(), key=lambda item: item["score"], reverse=True)
     top = ranked[:top_k]
     confidence = sum(item["score"] for item in top) / max(1, len(top))
+    # Normalize confidence to [0, 1] range (BM25 scores can exceed 1.0)
+    confidence = min(1.0, confidence)
     return top, confidence
 
 
-def retrieval_agent(state: GradeState) -> GradeState:
+def retrieval_agent(state: GradeState, status_callback: callable = None) -> GradeState:
+    if status_callback:
+        status_callback("Retrieval Agent", "Running retrieval...", "⏳")
     print("\n[Agent 1] Retrieval Agent running...")
     top_k = int(POLICY.get("top_k", 6))
     rubric = _resolve_rubric(state["question"], state["marking_guide"])
@@ -471,10 +475,14 @@ def retrieval_agent(state: GradeState) -> GradeState:
     state["retrieval_confidence"] = round(confidence, 4)
     state["low_confidence"] = len(chunks) == 0 or confidence < threshold
     print(f"[Agent 1] Retrieved {len(chunks)} chunks, confidence={state['retrieval_confidence']}")
+    if status_callback:
+        status_callback("Retrieval Agent", f"✓ Retrieved {len(chunks)} chunks (confidence={state['retrieval_confidence']:.4f})", "✅")
     return state
 
 
-def coverage_checker_agent(state: GradeState) -> GradeState:
+def coverage_checker_agent(state: GradeState, status_callback: callable = None) -> GradeState:
+    if status_callback:
+        status_callback("Coverage Checker", "Checking rubric coverage...", "⏳")
     print("[Agent 2] Coverage Checker Agent running...")
 
     rubric = state.get("selected_rubric") or _resolve_rubric(state["question"], state["marking_guide"])
@@ -668,10 +676,14 @@ JSON ලෙස පමණක් පිළිතුරු දෙන්න:
         "items": merged_items,
     }
     print(f"[Agent 2] Coverage completed for {len(merged_items)} criteria.")
+    if status_callback:
+        status_callback("Coverage Checker", f"✓ Evaluated {len(merged_items)} criteria", "✅")
     return state
 
 
-def scoring_agent(state: GradeState) -> GradeState:
+def scoring_agent(state: GradeState, status_callback: callable = None) -> GradeState:
+    if status_callback:
+        status_callback("Scoring Agent", "Computing criterion marks...", "⏳")
     print("[Agent 3] Scoring Agent running...")
     coverage = state["coverage_output"]
 
@@ -754,6 +766,8 @@ JSON ලෙස:
         "breakdown": deterministic_breakdown,
     }
     print(f"[Agent 3] Score={final_score}/20, confidence_adjusted_score={confidence_adjusted}/20")
+    if status_callback:
+        status_callback("Scoring Agent", f"✓ Score: {final_score}/20 (Adjusted: {confidence_adjusted}/20)", "✅")
     return state
 
 
@@ -832,7 +846,9 @@ def enforce_evidence(explanation: str) -> tuple[str, int, int]:
     return "\n".join(validated), grounded, total
 
 
-def explanation_agent(state: GradeState) -> GradeState:
+def explanation_agent(state: GradeState, status_callback: callable = None) -> GradeState:
+    if status_callback:
+        status_callback("Explanation Agent", "Generating explanation...", "⏳")
     print("[Agent 4] Explanation Agent running...")
 
     ontology_lines = []
@@ -907,10 +923,14 @@ def explanation_agent(state: GradeState) -> GradeState:
         text = _fallback_explanation(state)
 
     state["justification"] = text
+    if status_callback:
+        status_callback("Explanation Agent", "✓ Explanation generated", "✅")
     return state
 
 
-def evidence_enforcement_agent(state: GradeState) -> GradeState:
+def evidence_enforcement_agent(state: GradeState, status_callback: callable = None) -> GradeState:
+    if status_callback:
+        status_callback("Evidence Enforcement", "Validating grounding...", "⏳")
     print("[Agent 5] Evidence Enforcement Layer running...")
     state["ontology_match_output"] = _build_ontology_match_output(state)
     state["missing_concepts"] = _build_missing_concepts(state)
@@ -923,6 +943,10 @@ def evidence_enforcement_agent(state: GradeState) -> GradeState:
     validated, final_grounded, final_total = enforce_evidence(final_text)
     state["evidence_coverage"] = f"{final_grounded}/{final_total} වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි"
     state["justification"] = validated
+    coverage_pct = (final_grounded / final_total * 100) if final_total > 0 else 0
+    print(f"[Agent 5] Evidence enforcement completed. Coverage: {coverage_pct:.2f}%")
+    if status_callback:
+        status_callback("Evidence Enforcement", f"✓ Grounding verified ({coverage_pct:.1f}% coverage)", "✅")
     return state
 
 
@@ -943,28 +967,50 @@ def build_grading_graph():
     return workflow.compile()
 
 
-def run_single_case(question: str, student_answer: str, marking_guide: str) -> GradeState:
-    app = build_grading_graph()
-    init_state: GradeState = {
-        "question": question,
-        "student_answer": student_answer,
-        "marking_guide": marking_guide,
-        "retrieved_chunks": [],
-        "retrieval_confidence": 0.0,
-        "low_confidence": False,
-        "selected_rubric": {},
-        "entity_matches": [],
-        "relationship_checks": [],
-        "coverage_output": {},
-        "scoring_output": {},
-        "final_score": 0,
-        "confidence_adjusted_score": 0,
-        "missing_concepts": [],
-        "ontology_match_output": [],
-        "evidence_coverage": "0/0 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
-        "justification": "",
+def run_single_case(
+    question: str,
+    student_answer: str,
+    marking_guide: str,
+    status_callback: callable = None,
+) -> dict[str, Any]:
+    """Run the 5-agent grading pipeline with optional status callback."""
+    state = GradeState(
+        question=question,
+        student_answer=student_answer,
+        marking_guide=marking_guide,
+        retrieved_chunks=[],
+        retrieval_confidence=0.0,
+        low_confidence=False,
+        selected_rubric={},
+        entity_matches=[],
+        relationship_checks=[],
+        coverage_output={},
+        scoring_output={},
+        final_score=0,
+        confidence_adjusted_score=0,
+        missing_concepts=[],
+        ontology_match_output=[],
+        evidence_coverage="0/0 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+        justification="",
+    )
+    
+    # Sequential agent execution with status callbacks
+    state = retrieval_agent(state, status_callback)
+    state = coverage_checker_agent(state, status_callback)
+    state = scoring_agent(state, status_callback)
+    state = explanation_agent(state, status_callback)
+    state = evidence_enforcement_agent(state, status_callback)
+    
+    return {
+        "final_score": state["final_score"],
+        "confidence_adjusted_score": state["confidence_adjusted_score"],
+        "retrieval_confidence": state["retrieval_confidence"],
+        "evidence_coverage": state["evidence_coverage"],
+        "scoring_output": state["scoring_output"],
+        "ontology_match_output": state["ontology_match_output"],
+        "missing_concepts": state["missing_concepts"],
+        "justification": state["justification"],
     }
-    return cast(GradeState, app.invoke(init_state))
 
 
 if __name__ == "__main__":

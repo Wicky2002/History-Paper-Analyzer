@@ -1,0 +1,230 @@
+{
+  "summary": {
+    "n_cases": 15,
+    "metrics_raw": {
+      "mae": 2.4667,
+      "rmse": 3.2965,
+      "pearson": 0.9648,
+      "exact_match_rate": 26.67,
+      "within_2_rate": 53.33,
+      "over_scoring_cases": 4,
+      "under_scoring_cases": 7
+    },
+    "metrics_adjusted": {
+      "mae": 2.4667,
+      "rmse": 3.2965,
+      "pearson": 0.9648,
+      "exact_match_rate": 26.67,
+      "within_2_rate": 53.33,
+      "over_scoring_cases": 4,
+      "under_scoring_cases": 7
+    },
+    "by_answer_type": {
+      "correct_100": {
+        "count": 5,
+        "expected_mean": 20.0,
+        "pred_mean": 15.4,
+        "mae": 4.6
+      },
+      "mixed": {
+        "count": 5,
+        "expected_mean": 10.0,
+        "pred_mean": 9.4,
+        "mae": 0.6
+      },
+      "wrong_100": {
+        "count": 5,
+        "expected_mean": 0.0,
+        "pred_mean": 2.2,
+        "mae": 2.2
+      }
+    },
+    "evidence_coverage": {
+      "grounded": 454,
+      "total": 589,
+      "ratio_percent": 77.08
+    },
+    "ontology_labels": {
+      "full": 7,
+      "partial": 8,
+      "wrong": 1,
+      "full_percent": 43.75,
+      "partial_percent": 50.0,
+      "wrong_percent": 6.25
+    },
+    "missing_concept_alignment_percent": 66.67,
+    "latency_sec": {
+      "mean": 268.536,
+      "median": 260.965,
+      "min": 148.11,
+      "max": 395.474
+    }
+  },
+  "cases": [
+    {
+      "question_id": 1,
+      "answer_type": "correct_100",
+      "expected": 20.0,
+      "raw_score": 15.0,
+      "adjusted_score": 15.0,
+      "retrieval_confidence": 0.4332,
+      "evidence_coverage": "29/38 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 2,
+      "latency_sec": 310.407
+    },
+    {
+      "question_id": 1,
+      "answer_type": "mixed",
+      "expected": 10.0,
+      "raw_score": 10.0,
+      "adjusted_score": 10.0,
+      "retrieval_confidence": 0.4597,
+      "evidence_coverage": "30/39 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 3,
+      "latency_sec": 207.74
+    },
+    {
+      "question_id": 1,
+      "answer_type": "wrong_100",
+      "expected": 0.0,
+      "raw_score": 1.0,
+      "adjusted_score": 1.0,
+      "retrieval_confidence": 0.4597,
+      "evidence_coverage": "36/45 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 9,
+      "latency_sec": 260.965
+    },
+    {
+      "question_id": 2,
+      "answer_type": "correct_100",
+      "expected": 20.0,
+      "raw_score": 17.0,
+      "adjusted_score": 17.0,
+      "retrieval_confidence": 0.4332,
+      "evidence_coverage": "26/35 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 2,
+      "latency_sec": 300.144
+    },
+    {
+      "question_id": 2,
+      "answer_type": "mixed",
+      "expected": 10.0,
+      "raw_score": 10.0,
+      "adjusted_score": 10.0,
+      "retrieval_confidence": 0.4332,
+      "evidence_coverage": "30/39 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 6,
+      "latency_sec": 258.752
+    },
+    {
+      "question_id": 2,
+      "answer_type": "wrong_100",
+      "expected": 0.0,
+      "raw_score": 5.0,
+      "adjusted_score": 5.0,
+      "retrieval_confidence": 0.4332,
+      "evidence_coverage": "32/41 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 8,
+      "latency_sec": 395.474
+    },
+    {
+      "question_id": 3,
+      "answer_type": "correct_100",
+      "expected": 20.0,
+      "raw_score": 13.0,
+      "adjusted_score": 13.0,
+      "retrieval_confidence": 0.4481,
+      "evidence_coverage": "29/38 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 5,
+      "latency_sec": 177.335
+    },
+    {
+      "question_id": 3,
+      "answer_type": "mixed",
+      "expected": 10.0,
+      "raw_score": 9.0,
+      "adjusted_score": 9.0,
+      "retrieval_confidence": 0.444,
+      "evidence_coverage": "29/38 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 5,
+      "latency_sec": 148.11
+    },
+    {
+      "question_id": 3,
+      "answer_type": "wrong_100",
+      "expected": 0.0,
+      "raw_score": 0.0,
+      "adjusted_score": 0.0,
+      "retrieval_confidence": 0.4536,
+      "evidence_coverage": "31/40 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 7,
+      "latency_sec": 249.269
+    },
+    {
+      "question_id": 4,
+      "answer_type": "correct_100",
+      "expected": 20.0,
+      "raw_score": 16.0,
+      "adjusted_score": 16.0,
+      "retrieval_confidence": 0.4678,
+      "evidence_coverage": "27/36 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 3,
+      "latency_sec": 373.139
+    },
+    {
+      "question_id": 4,
+      "answer_type": "mixed",
+      "expected": 10.0,
+      "raw_score": 10.0,
+      "adjusted_score": 10.0,
+      "retrieval_confidence": 0.4649,
+      "evidence_coverage": "30/39 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 6,
+      "latency_sec": 377.222
+    },
+    {
+      "question_id": 4,
+      "answer_type": "wrong_100",
+      "expected": 0.0,
+      "raw_score": 1.0,
+      "adjusted_score": 1.0,
+      "retrieval_confidence": 0.4838,
+      "evidence_coverage": "35/44 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 8,
+      "latency_sec": 230.621
+    },
+    {
+      "question_id": 5,
+      "answer_type": "correct_100",
+      "expected": 20.0,
+      "raw_score": 16.0,
+      "adjusted_score": 16.0,
+      "retrieval_confidence": 0.4332,
+      "evidence_coverage": "28/37 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 4,
+      "latency_sec": 283.241
+    },
+    {
+      "question_id": 5,
+      "answer_type": "mixed",
+      "expected": 10.0,
+      "raw_score": 8.0,
+      "adjusted_score": 8.0,
+      "retrieval_confidence": 0.4605,
+      "evidence_coverage": "31/40 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 7,
+      "latency_sec": 279.314
+    },
+    {
+      "question_id": 5,
+      "answer_type": "wrong_100",
+      "expected": 0.0,
+      "raw_score": 4.0,
+      "adjusted_score": 4.0,
+      "retrieval_confidence": 0.4629,
+      "evidence_coverage": "31/40 වාක්‍ය පාඨපොත් සාක්ෂි සමඟ සම්බන්ධයි",
+      "missing_count": 7,
+      "latency_sec": 176.315
+    }
+  ]
+}
